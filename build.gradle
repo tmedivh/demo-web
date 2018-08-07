@@ -1,0 +1,49 @@
+
+buildscript {
+	ext {
+		springBootVersion = '2.0.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+allprojects {
+
+	group = 'com.example'
+	version = '0.0.1-SNAPSHOT'
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		//web
+		compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.4.RELEASE'
+		//以下是database的设置:
+		compile group: 'com.alibaba', name: 'druid', version: '1.1.10'
+		compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.3.2'
+		compile group: 'tk.mybatis', name: 'mapper-spring-boot-starter', version: '2.0.3'
+		compile group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.2.5'
+		//mysql驱动
+		compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.9-rc'
+		//doc
+		compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+		compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+		//工具类
+		compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+		compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+		compile group: 'com.xiaoleilu', name: 'hutool-core', version: '3.3.2'
+
+		testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.4.RELEASE'
+	}
+
+}

@@ -1,0 +1,10 @@
+description = 'web-api'
+
+dependencies {
+    compile project(":web-base")
+
+    //shiro 核心包
+    compile group: 'org.apache.shiro', name: 'shiro-spring', version: '1.4.0'
+    // jwt token
+    compile group: 'com.auth0', name: 'java-jwt', version: '3.4.0'
+}
