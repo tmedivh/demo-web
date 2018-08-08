@@ -12,7 +12,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /*
@@ -37,7 +36,7 @@ public class LoginController {
                             @RequestParam("password") String password) {
         UserVO userVO = userService.getUserByName(username);
         if (userVO.getPass().equals(password)) {
-            return new ResponseVO(200, "Login success", JWTUtil.sign(username, password));
+            return ResponseVO.response().setMsg("login success").setData(JWTUtil.sign(username, password)).build();
         } else {
             throw new UnauthorizedException();
         }
@@ -47,33 +46,27 @@ public class LoginController {
     public ResponseVO article() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
-            return new ResponseVO(200, "You are already logged in", null);
+            return ResponseVO.response().setMsg("You are already logged in").build();
         } else {
-            return new ResponseVO(200, "You are guest", null);
+            return ResponseVO.response().setMsg("You are guest").build();
         }
     }
 
     @GetMapping("/require_auth")
     @RequiresAuthentication
     public ResponseVO requireAuth() {
-        return new ResponseVO(200, "You are authenticated", null);
+        return ResponseVO.response().setMsg("You are authenticated").build();
     }
 
     @GetMapping("/require_role")
     @RequiresRoles("admin")
     public ResponseVO requireRole() {
-        return new ResponseVO(200, "You are visiting require_role", null);
+        return ResponseVO.response().setMsg("You are visiting require_role").build();
     }
 
     @GetMapping("/require_permission")
     @RequiresPermissions(logical = Logical.AND, value = {"view", "edit"})
     public ResponseVO requirePermission() {
-        return new ResponseVO(200, "You are visiting permission require edit,view", null);
-    }
-
-    @RequestMapping(path = "/401")
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseVO unauthorized() {
-        return new ResponseVO(401, "Unauthorized", null);
+        return ResponseVO.response().setMsg("You are visiting permission require edit,view").build();
     }
 }
