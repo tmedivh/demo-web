@@ -37,14 +37,18 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
-        tokenPar.name("token").description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        tokenPar.name("token")
+                .description("token验证")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(false)
+                .build();
         pars.add(tokenPar.build());
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(environment.getProperty("swagger.enable", Boolean.class))
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.api.controller"))
                 .paths(PathSelectors.any())
                 .build().globalOperationParameters(pars);
     }
